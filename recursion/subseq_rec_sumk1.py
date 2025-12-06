@@ -1,4 +1,4 @@
-#Printing 1st subsequence whose sum is k
+# Printing 1st subsequence whose sum is k
 
 def gen_subseq_sum(sequence, k, index = 0, current_subseq = None, current_sum = 0):
     if(current_subseq is None):

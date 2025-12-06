@@ -1,3 +1,4 @@
+#Preorder: root -> left -> right
 
 class TreeNode:
     def __init__(self, val):

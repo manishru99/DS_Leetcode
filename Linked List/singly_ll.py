@@ -16,7 +16,7 @@ class LinkedList:
     def length_of_ll(self):
         cnt = 0
         curr = self.head
-        while curr:
+        while curr:    # same as curr is not None:
             cnt += 1
             curr = curr.next
         return cnt
@@ -78,7 +78,7 @@ class LinkedList:
             self.insert_at_front(data)
             return
         curr = self.head
-        for _ in range(position-1):
+        for _ in range(1, position-1): #0 indexed
             curr = curr.next
         new_node = Node(data)
         new_node.next = curr.next
@@ -112,7 +112,7 @@ class LinkedList:
             self.delete_at_beginning()
             return
         curr = self.head
-        for _ in range(position - 1):
+        for _ in range(position - 1):  #0 based indexing
             curr = curr.next
         curr.next = curr.next.next
 
@@ -125,7 +125,7 @@ class LinkedList:
             self.head = None
             return
         curr = self.head
-        while curr.next and curr.next.next:
+        while curr.next and curr.next.next:  # same as while curr.next.next: 
             curr = curr.next
         curr.next = None
 
@@ -134,6 +134,7 @@ class LinkedList:
         self.head = None
 
     # 5. Search an element in a linked list (Iterative)
+    #TC = O(n) SC = O(1)
     def search_iterative(self, target_data):
         curr = self.head
         while curr:
@@ -143,6 +144,7 @@ class LinkedList:
         return False
     
     # 5. Search an element in a linked list (Recursive)
+    #TC = O(n) SC = O(1)
     def search_recursive(self, node, target_data):
         if not node:
             return False

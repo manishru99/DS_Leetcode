@@ -19,7 +19,7 @@ class DoublyLL:
         nn = Node(data = new_data)
         
         # 3. Make next of new node as head and previous as NULL
-        nn.next = self.head
+        nn.next = self.head  #For 1 node only head is None as defined above
         nn.prev = None
         
         # 4. Change prev of head node to new node
@@ -95,7 +95,7 @@ class DoublyLL:
         # 1. allocate node 
         # 2. put in the data
         nn = Node(data=new_data)
-        last = self.head
+        curr = self.head
 
         # 3. This new node is going to be the
         # last node, so make next of it as NULL
@@ -110,14 +110,14 @@ class DoublyLL:
             return
         
         # 5. Else traverse till the last node
-        while(last.next is not None):
-            last = last.next
+        while(curr.next is not None):
+            curr = curr.next
 
         # 6. Change the next of last node
-        last.next = nn
+        curr.next = nn
 
         # 7. Make last node as previous of new node
-        nn.prev = last
+        nn.prev = curr
 
     #T.C. = O(n)
     #S.C. = O(1)

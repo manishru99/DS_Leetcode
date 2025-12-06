@@ -5,7 +5,7 @@ def convert2decimal(x):
     for i in range(size-1, -1, -1):
         if(x[i] == '1'):
             num += p2
-        p2 *= 2
+        p2 *= 2   # Adding 2s with the 2^pos
     return num
 
 #TC = O(len)  #length of string x

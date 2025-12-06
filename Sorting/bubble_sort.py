@@ -1,13 +1,17 @@
 # push the max to the last by adjacent swaps
 # Keywords: Maximum Last
 
+#TC = O(n^2)
+#But Best case TC = O(n)
+
 def bubble_sort(arr, n):
     
     #outer loop runs from end to 1st index
-    for i in range(n-1, 0, -1): 
+    for i in range(n-1, 0, -1):  # just running loop from last else can follow below another approach
         swapped = False
-        #inner loop runs from 1st index to i-1 
+        #inner loop runs from 0 index to i-1 
         for j in range(0, i):
+            # Compare adjacent elements
             if(arr[j] > arr[j+1]):
                 arr[j], arr[j+1] = arr[j+1], arr[j]
                 swapped = True
@@ -46,8 +50,6 @@ for i in range(n):
     print(arr[i])
 
 
-#TC = O(n^2)
-#But Best case TC = O(n)
 
 
 

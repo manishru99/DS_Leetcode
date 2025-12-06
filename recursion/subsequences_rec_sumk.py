@@ -26,6 +26,8 @@ for i in range(n):
 target_sum = int(input("Enter k: "))
 gen_subseq_sum(seq, target_sum)
 
+# [sequence[index]] - curr elem being considered as a list to be included in the subseq list
+# sequence[index] - get the curr elem to be added
 #TC = O(2^n)
 #SC = O(n)
 

@@ -1,5 +1,16 @@
-#
+# Merge Sort (Divide and Conquer)
 
+'''Merge Sort is a divide-and-conquer algorithm that:
+
+1. Divides the array into two halves recursively until each 
+subarray has one element.
+2. Merges the sorted subarrays back together in order.
+Each merge step combines two sorted arrays into one, maintaining order. 
+It has a consistent time complexity of O(nlogn) and uses O(n) space 
+due to the extra arrays during merging.
+'''
+#TC = O(nlogn)   
+#SC = O(n) 
 def merge_sort(arr, low, high):
     #base case
     #In order to stop recursion we write a base case
@@ -56,5 +67,4 @@ for i in range(n):
     print(arr[i])
 
 
-#TC = O()  (worst and avg case)
-#TC = O()    (Best case)  
+   

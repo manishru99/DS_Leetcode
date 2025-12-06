@@ -52,7 +52,8 @@ class Solution:
             return True
         for i in range(n):    #O(n)
             if nums[i] > nums[(i+1) % n]:
-                inv_cnt += 1
+                inv_cnt += 1  # For the elem after which the order breaks
+                # it can be 1 for a rotated arr or 0 for a sorted arr
         return inv_cnt <= 1
 
         #TC = O(n)

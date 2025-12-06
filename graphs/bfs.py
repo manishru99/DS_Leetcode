@@ -1,6 +1,10 @@
 from collections import deque
 
 #For BFS: Queue used
+#TC = O(V) + O(2E) = O(V+E)  -no of vertices + no of edges
+#For every node we traverse all the neighboring nodes
+#i.e. for every node in queue inside for loop will run for the node's degree 
+#SC = O(V) - queue + visited list + BFS list
 
 # BFS from given source s
 def bfs(adj, s):
@@ -10,7 +14,8 @@ def bfs(adj, s):
     # Initially mark all the vertices as not visited
     # When we push a vertex into the q, we mark it as 
     # visited
-    visited = [False] * len(adj)
+    visited = [False] * len(adj) 
+    # Use len(adj) when 0-based indexing, len(adj)+1 for 1-based 
 
     # Mark the source node as visited and enqueue it
     visited[s] = True
@@ -18,7 +23,6 @@ def bfs(adj, s):
 
     #iterate over the queue
     while q:
-
         #dequeue a vertex from the queue and print it
         curr = q.popleft()
         print(curr, end = " ")
@@ -60,7 +64,3 @@ if __name__ == "__main__":
     bfs(adj, 0)
 
 
-    #TC = O(V) + O(2E) = O(V+E)  -no of vertices+no of edges
-    #For every node we traverse all the neighboring nodes
-    #i.e. for every node in queue inside for loop will run for the node's degree 
-    #SC = O(V) - queue + visited list + BFS list

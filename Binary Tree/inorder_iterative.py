@@ -1,3 +1,5 @@
+# Inorder: left -> root -> right
+
 class Solution:
     def inorderTraversal(self, root):
         stack = []
@@ -18,4 +20,7 @@ class Solution:
         return inorder
 
 
-
+'''
+- O(N) in the worst case (due to stack and output list).
+- O(log₂ N) auxiliary space if the tree is balanced (excluding the output list).
+'''

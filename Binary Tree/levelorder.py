@@ -38,7 +38,11 @@ class Solution:
             ans.append(nodes_level)
         return ans
 
+# For finding the total number of levels in binary tree: len(ans)
         
+
+
+
 def printList(lst):
 # Iterate through the
 # list and print each element

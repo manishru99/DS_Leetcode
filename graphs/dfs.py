@@ -1,6 +1,7 @@
 #DFS using list data structure
 
 #TC = O(V) + O(2E) = O(V + E)  where 2E is the summation of degrees
+# 2E for undirected and E for directeds
 #SC = O(V) + O(V) = O(V) visited list of size V 
 #and in worst case the stack space used by recursion will be V
 #eg. in case of skewed graph 1->2->3->4
@@ -10,7 +11,7 @@ def create_graph(num_nodes, num_edges):
     #graph = []
     graph = {}
 
-    # Initialize graph with empty lists for each node
+    # Initialize graph (adj list) with empty lists for each node
     for i in range(num_nodes):
         node = input(f"Enter the name of node {i+1}: ")
         graph[node] = []
@@ -25,6 +26,7 @@ def create_graph(num_nodes, num_edges):
 
 #Recursive DFS implementation
 #def dfs_recursive(graph, node, visited):
+# graph -> adj list
 def dfs_recursive(graph, node, visited = None):    
     # Mark node as visited by adding to the visited list
     # Initialize the visited list if it's the first call
@@ -32,10 +34,10 @@ def dfs_recursive(graph, node, visited = None):
         visited = []
     #For 1st time its the start node
     visited.append(node)  
-    print(node, end = ' ')
+    print(node, end = ' ') # Print or do some processing with the node
 
     #Recur for all adjacent vertices
-    for neighbor in graph[node]:     #O(2E)
+    for neighbor in graph[node]:     #O(2E) 
         if neighbor not in visited:  # Check if neighbor is not in the visited list
             dfs_recursive(graph, neighbor, visited)
 
@@ -84,3 +86,66 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+# Simple implementation
+from collections import deque
+
+# Recursive implementation
+def dfs_recursive(adj, node, visited):
+    # Step 1: Mark the current node as visited
+    visited[node] = True
+
+    # Step 2: Process the current node (e.g., print it)
+    print(node, end=" ")
+
+    # Step 3: Recursively visit all unvisited neighbors
+    for neighbor in adj[node]:
+        if not visited[neighbor]:
+            dfs_recursive(adj, neighbor, visited)
+
+
+# Iteratiive implementation
+def dfs_iterative(adj, start):
+    # Create a stack to manage nodes during DFS traversal
+    stack = deque()
+
+    # Initialize visited list to track which nodes have been explored
+    visited = [False] * len(adj)
+
+    # Start DFS by pushing the initial node onto the stack
+    stack.append(start)
+
+    # Continue traversal until the stack is empty
+    while stack:
+        # Pop the top node from the stack (LIFO behavior)
+        node = stack.pop()
+
+        # If the node hasn't been visited yet, process it
+        if not visited[node]:
+            visited[node] = True  # Mark the node as visited
+            print(node, end=" ")  # Print or process the node
+
+            # Traverse all adjacent nodes
+            # Reverse the adjacency list to maintain left-to-right order
+            for neighbor in reversed(adj[node]):
+                if not visited[neighbor]:
+                    stack.append(neighbor)  # Push unvisited neighbors onto the stack
+
+if __name__ == "__main__":
+    v = 5
+    adj = [[] for _ in range(v)]
+
+    add_edge(adj, 0, 1)
+    add_edge(adj, 0, 2)
+    add_edge(adj, 1, 3)
+    add_edge(adj, 1, 4)
+    add_edge(adj, 2, 4)
+
+    print("\nDFS Recursive starting from 0:")
+    visited = [False] * v
+    dfs_recursive(adj, 0, visited)
+
+    print("\nDFS Iterative starting from 0:")
+    dfs_iterative(adj, 0)

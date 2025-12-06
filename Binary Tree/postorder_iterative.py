@@ -1,3 +1,5 @@
+#Postorder: left -> right -> root
+
 def postorder_iterative(self, root):
     postorder = []
     st1 = [root]

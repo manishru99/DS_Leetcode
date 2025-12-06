@@ -1,0 +1,167 @@
+# Subset sum equal to target (DP- 14)
+
+# Recursion
+# TC = O(2^n) - At each index i, the function makes two recursive calls
+# SC = O(n) rec st
+def subset_sum(nums, target):
+    def helper(i, target):
+        # base case 1
+        if target == 0:
+            return True
+        # base case 2
+        if i == 0:
+            return nums[i] == target
+        '''is essential for correctness and efficiency. It ensures:
+- You dont go out of bounds.
+- You stop early on invalid paths.
+'''
+        # edge case
+        if i < 0 or target < 0:
+            return False 
+        not_take = helper(i - 1, target)
+        take = False # default
+        if target >= nums[i]:
+            # Only take the current number if it does not exceed the target
+            take = helper(i - 1, target - nums[i])
+        return take or not_take
+    return helper(len(nums) -1, target)
+
+# Memoization
+'''
+Create a dp array of size [n][k+1]. The size of the input array is n, 
+so the index will always lie between 0 and n-1. 
+The target can take any value between 0 and k. 
+Therefore we take the dp array as dp[n][k+1]
+'''
+# TC = O(n*k) Reason: There are N*K states therefore at max ‘N*K’ new problems will be solved.
+# SC = O(n*k) + O(n)
+def helper(i, target, nums, dp):
+    # base case 1
+    # Check if the target sum has been achieved.
+    if target == 0:
+        return True
+    # base case 2
+    # If we have reached the first element in the array.
+    if i == 0:
+        return nums[i] == target  # or return nums[0] == target same thing
+    if i < 0 or target < 0:
+        return False 
+    
+    if dp[i][target] != -1: 
+        return dp[i][target]
+    
+    not_take = helper(i - 1, target, nums, dp)
+    take = False
+    if target >= nums[i]:
+        # Only take the current number if it does not exceed the target
+        take = helper(i - 1, target - nums[i], nums, dp)
+    dp[i][target] = take or not_take
+    return dp[i][target]
+
+def subset_sum(nums, target):
+    dp = [[-1 for _ in range(target + 1)] for _ in range(len(nums))]
+    return helper(len(nums) -1, target, nums, dp)
+
+# Tabulation
+# TC = O(n*target) Reason: There are N*K states therefore at max ‘N*K’ new problems will be solved.
+# SC = O(n*target)
+
+def subset_sum(nums, target):
+    n = len(nums)
+    dp = [[-1 for _ in range(target + 1)] for _ in range(len(nums))]
+    for i in range(n):
+        # base 1
+        dp[i][0] = True  # If at any i, target becomes 0
+        # If target is 0, we can always achieve it with an empty subset
+    # base 2
+    if nums[0] <= target:
+        dp[0][nums[0]] = True # if at i=0, target is equal to nums[0]
+    for i in range(1, n): # ind goes from 1 to n-1
+        for k in range(1, target + 1): # target goes from 1 to target
+            not_take = dp[i - 1][k]
+            take = False
+            if k >= nums[i]:
+                take = dp[i - 1][k - nums[i]]
+            dp[i][k] = take or not_take
+    # The final answer will be in dp[n-1][target]
+    return dp[n - 1][target]
+
+'''
+for i in range(n):
+        # base 1
+        dp[i][0] = True  Explanation:
+This initializes the first column of your DP table. It says:
+For any number of elements from the array, a target sum of 0 is always achievable — simply by choosing no elements (i.e., the empty subset).
+
+🧪 Example
+Let’s say:
+nums = [3, 1, 4]
+target = 5
+
+
+You’ll have a DP table:
+dp = [[-1, -1, -1, -1, -1, -1],   # for nums[0] = 3
+       [-1, -1, -1, -1, -1, -1],   # for nums[1] = 1
+       [-1, -1, -1, -1, -1, -1]]   # for nums[2] = 4
+
+
+After running this loop:
+for i in range(n):
+    dp[i][0] = True
+
+
+DP becomes:
+dp = [[ True, -1, -1, -1, -1, -1],
+       [ True, -1, -1, -1, -1, -1],
+       [ True, -1, -1, -1, -1, -1]]
+
+
+✅ Meaning: With just nums[0], or nums[0:1], or nums[0:2], we can always form target = 0.
+
+This forms the foundation of your DP recurrence, ensuring all future calculations are grounded in the fact that zero-sum is always achievable by doing nothing.
+
+'''
+
+# Space Optimization
+'''
+Time Complexity: O(N*K)
+
+Reason: There are three nested loops
+
+Space Complexity: O(K)
+
+Reason: We are using an external array of size ‘K+1’ to store only one row.
+'''
+def subset_sum(nums, target):
+    n = len(nums)
+    # Initialize a boolean array 'prev' with size (k + 1).
+    prev = [False] * (target + 1)
+    # Set the first element of 'prev' to True since an empty subset can sum up to 0.
+    prev[0] = True
+    # Check if the first element of 'arr' can directly contribute to the target sum 'k'.
+    if nums[0] <= target:
+        prev[nums[0]] = True
+    
+   # Loop through the elements of 'arr' and update 'prev' using dynamic programming.
+    for ind in range(1, n):
+        # Initialize a new boolean array 'cur' for the current element.
+        cur = [False] * (target + 1)
+        
+        # An empty subset can always sum up to 0.
+        cur[0] = True
+        for target in range(1, target + 1):
+            not_taken = prev[target]  # Previous result without including the current element.
+            taken = False
+            
+            # Check if including the current element is possible without exceeding the target.
+            if nums[ind] <= target:
+                taken = prev[target - nums[ind]]
+            
+            # Update 'cur' with the result for the current 'target'.
+            cur[target] = not_taken or taken
+        
+        # Update 'prev' with the results for the current element 'ind'.
+        prev = cur
+
+    # The final result is stored in 'prev[k]'.
+    return prev[target]
